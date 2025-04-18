@@ -1,0 +1,8 @@
+Icons folder
+https://icon-icons.com/icon/js-JavaScript-atom/115529
+Title image
+https://images.app.goo.gl/754zG8PF1qZBLpM39
+
+react config 
+	https://tailwindcss.com/docs/installation/using-vite
+	https://reactrouter.com/start/data/installation

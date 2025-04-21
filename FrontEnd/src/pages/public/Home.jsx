@@ -1,6 +1,6 @@
 import React from 'react'
-import NavBar from '../Components/Header/NavigationBar'
-import FooterBar from '../Components/Footer/FooterBar'
+import NavBar from "../../components/navigationBar/NavigationBar";
+import FooterBar from "../../components/footerBar/FooterBar";
 
 function Home() {
   return (

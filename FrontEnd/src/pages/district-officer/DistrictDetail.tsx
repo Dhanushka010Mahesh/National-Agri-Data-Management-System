@@ -1,13 +1,18 @@
-
+import { useEffect } from 'react';
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import { fetchDistrictData } from "@/services/MockDistrictData";
 
 const DistrictDetail: React.FC = () => {
   const { districtId } = useParams();
   const { user } = useAuth();
+  
+  useEffect(() => {
+    fetchDistrictData(districtId); // Fetch data for district ID 5
+  }, [districtId]);
 
   // Mock division data - in a real app this would come from an API
   const divisions = [
@@ -17,7 +22,7 @@ const DistrictDetail: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-16">
+    <div className="min-h-screen bg-gray-50 pt-4">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-8">
           <div>
@@ -91,7 +96,7 @@ const DistrictDetail: React.FC = () => {
                       </div>
                     </div>
                     <Button variant="outline" className="w-full" asChild>
-                      <Link to={`/District_Officer/${districtId}/${division.id}/Rice`}>Manage Division</Link>
+                      <Link to={`/District_Officer/${districtId}/${division.id}`}>Manage Division</Link>
                     </Button>
                   </CardContent>
                 </Card>

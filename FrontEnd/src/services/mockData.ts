@@ -1,5 +1,5 @@
 
-import { Blog, Land, Category, User, UserRole, Cultivation, CultivationStatus, District, Division, Notification } from "@/types";
+import { Blog, Land, Category, User, UserRole, Cultivation, CultivationStatus, Division, Notification } from "@/types";
 
 // Mock categories
 export const categories: Category[] = [
@@ -11,10 +11,10 @@ export const categories: Category[] = [
 // Mock blogs
 export const blogs: Blog[] = [
   {
-    id: "1",
+    id: "199",
     title: "Modern Rice Farming Techniques",
     content: `
-      <p>Rice farming has evolved significantly over the past decade. Modern techniques now include precision agriculture, drone monitoring, and sustainable water management.</p>
+      <p>Ricee farming has evolved significantly over the past decade. Modern techniques now include precision agriculture, drone monitoring, and sustainable water management.</p>
       <h2>Precision Agriculture</h2>
       <p>Using GPS-guided equipment, farmers can now plant, fertilize, and harvest with centimeter-level accuracy. This reduces waste and increases yield.</p>
       <h2>Drone Monitoring</h2>
@@ -166,33 +166,7 @@ export const lands: Land[] = [
   }
 ];
 
-// Mock districts
-export const districts: District[] = [
-  {
-    id: "1",
-    name: "Colombo",
-    divisions: [
-      { id: "11", name: "Kolonnawa", districtId: "1", officerId: "2" },
-      { id: "12", name: "Kaduwela", districtId: "1" }
-    ]
-  },
-  {
-    id: "2",
-    name: "Kandy",
-    divisions: [
-      { id: "21", name: "Gangawata Korale", districtId: "2", officerId: "5" },
-      { id: "22", name: "Harispattuwa", districtId: "2" }
-    ]
-  },
-  {
-    id: "3",
-    name: "Galle",
-    divisions: [
-      { id: "31", name: "Bentota", districtId: "3" },
-      { id: "32", name: "Elpitiya", districtId: "3", officerId: "6" }
-    ]
-  }
-];
+
 
 // Mock notifications
 export const notifications: Notification[] = [
@@ -228,16 +202,6 @@ export const getMockBlogById = (id: string) => blogs.find(blog => blog.id === id
 export const getMockLands = () => lands;
 export const getMockLandsByFarmerId = (farmerId: string) => lands.filter(land => land.farmerId === farmerId);
 export const getMockLandById = (id: string) => lands.find(land => land.id === id);
-export const getMockDistricts = () => districts;
-export const getMockDistrictById = (id: string) => districts.find(district => district.id === id);
-export const getMockDivisions = () => districts.flatMap(district => district.divisions);
-export const getMockDivisionById = (id: string) => {
-  for (const district of districts) {
-    const division = district.divisions.find(div => div.id === id);
-    if (division) return division;
-  }
-  return undefined;
-};
 export const getMockCategories = () => categories;
 export const getMockCategoryById = (id: string) => categories.find(category => category.id === id);
 export const getMockNotificationsByUserId = (userId: string) => notifications.filter(notification => notification.userId === userId);

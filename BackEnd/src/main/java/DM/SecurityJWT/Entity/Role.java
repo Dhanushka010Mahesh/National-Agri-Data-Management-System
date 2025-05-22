@@ -1,6 +1,6 @@
 package DM.SecurityJWT.Entity;
 
-public enum Role {
+public enum  Role {
     FARMER,
     DIVISION_OFFICER,
     DISTRICT_OFFICER

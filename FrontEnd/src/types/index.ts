@@ -1,4 +1,3 @@
-
 // User types
 export interface User {
   id: string;
@@ -84,13 +83,16 @@ export interface District {
   id: string;
   name: string;
   divisions: Division[];
+  farmers: number;
+  lands: number;
 }
 
 export interface Division {
   id: string;
   name: string;
-  districtId: string;
-  officerId?: string;
+  districtId?: string;
+  officerId ?: string ;
+  //liveStatus?: number; // Added liveStatus
 }
 
 // Category types

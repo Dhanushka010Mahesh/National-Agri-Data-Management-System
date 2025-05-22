@@ -41,7 +41,7 @@ public class SecurityConfig {
 
                 /* some authentication disable-permit( give path in patterns) and anather all do like usualy  */
                 .authorizeHttpRequests(r->r
-                        .requestMatchers("/api/v1/users/signin","/api/v1/users/signup").permitAll()
+                        .requestMatchers("/api/v1/users/signin","/api/v1/district/**","/api/v1/users/signup").permitAll()
                         .anyRequest().authenticated()
                 )
 

@@ -6,6 +6,7 @@ import DM.SecurityJWT.Dto.RegisterUserRequestDTO;
 import DM.SecurityJWT.Dto.RegisterUserRespondDTO;
 import DM.SecurityJWT.Entity.AuthUsers;
 import DM.SecurityJWT.Repository.UsersRepository;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class UsersService {
+public class UsersService implements AuthServices{
 
 
     private final UsersRepository userRepository;
@@ -84,6 +85,16 @@ public class UsersService {
         if(userData.getId()==null) return new RegisterUserRespondDTO("system error",null);
 
         return new RegisterUserRespondDTO(String.format("user register at %s",userData.getId()),null);
+    }
+
+    @Override
+    public RegisterUserRespondDTO updateUser(String userName, RegisterUserRequestDTO userData) {
+//        AuthUsers authUser=userRepository.findByUsername(userName)
+//                .orElseThrow( () ->  Exception("no found  "+userName) );
+//
+//        authUser.setLocation(userData.getLocation());
+//        AuthUsers updatedData =userRepository.save(authUser);
+        return  null;
     }
 
     private Boolean isFarmerEnable(String username){

@@ -1,7 +1,7 @@
 package DM.SecurityJWT.Service;
 
 import DM.SecurityJWT.Entity.AuthUsers;
-import DM.SecurityJWT.Repository.UsersRepository;
+import DM.SecurityJWT.Repository.AuthRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,18 +10,18 @@ public class UsersDetailsService implements org.springframework.security.core.us
 
     /* override password encorder for our password encorded*/
    // private final PasswordEncoder passwordEncoder;
-    private final UsersRepository userRepository;
+    private final AuthRepository authRepository;
 
-    public UsersDetailsService(UsersRepository farmerRepository) {
+    public UsersDetailsService( AuthRepository authRepository) {
+        this.authRepository = authRepository;
         //this.passwordEncoder = passwordEncoder;
-        this.userRepository = farmerRepository;
     }
 
     /* when user provide username and password check is it valid or not*/
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        AuthUsers loginUserData=userRepository.findByUsername(username).orElse(null);
+        AuthUsers loginUserData=authRepository.findByUsername(username).orElse(null);
         if(loginUserData==null) throw new UsernameNotFoundException("Not found farmer account");
 
         UserDetails user= User.builder()

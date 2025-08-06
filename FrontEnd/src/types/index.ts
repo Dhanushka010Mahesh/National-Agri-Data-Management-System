@@ -1,39 +1,108 @@
-// User types
-export interface User {
-  id: string;
-  name: string;
-  role: UserRole;
-  nic: string;
-  profilePicture?: string;
+// export enum UserRole {
+//   FARMER = "FARMER",
+//   DIVISION_OFFICER = "DIVISION_OFFICER", 
+//   DISTRICT_OFFICER = "DISTRICT_OFFICER",
+//   AGRICULTURE_OFFICER = "AGRICULTURE_OFFICER"
+// }
+
+// export interface User {
+//   id: string;
+//   name: string;
+//   role: UserRole;
+//   nic?: string;
+//   email?: string;
+//   status?: string;
+//   districtId?: string;
+//   divisionId?: string;
+//   profilePicture?: string;
+// }
+
+// export interface JwtPayload {
+//   role: string;
+//   districtId?: string;
+//   divisionId?: string;
+//   Id: string;
+//   userName: string;
+//   email: string;
+//   status: string;
+//   sub: string;
+//   iat: number;
+//   exp: number;
+// }
+export interface PageDistrictsRespondDTO {
+  districtsCount?: number;
+  divisionsCount?: number;
+  farmersCount?: number;
+  landsCount?: number;
+  districts?: PageSingleDistrictDTO[];
 }
 
-export enum UserRole {
-  GUEST = "GUEST",
-  FARMER = "FARMER",
-  DIVISION_OFFICER = "DIVISION_OFFICER",
-  DISTRICT_OFFICER = "DISTRICT_OFFICER",
-  HEAD_OFFICER = "HEAD_OFFICER"
+export interface PageSingleDistrictDTO {
+  districtId?: number;
+  name?: string;
+  divisionsCount?: number;
+  farmersCount?: number;
+  landsCount?: number;
+  divisions?: PageSingleDivisionDTO[];
 }
 
-// Land types
-export interface Land {
-  id: string;
-  address: Address;
-  irrigationType: string;
-  paddyLandType?: string;
-  farmerId?: string;
-  approved: boolean;
-  cultivations: Cultivation[];
+export interface PageSingleDivisionDTO {
+  divisionId?: number; // Corrected from 'divisioId' to 'divisionId'
+  name?: string;
+  farmersCount?: number;
+  landsCount?: number;
 }
 
 export interface Address {
-  street: string;
+  id?:string;
   no: string;
+  street: string;
   city: string;
   state: string;
   postalCode: string;
-  district: string;
+  district:string;
 }
+
+// District and Division types
+export interface District {
+  id: string;
+  name: string;
+  divisions: Division[];
+  liveStatus?: boolean;
+  farmers: number;
+  lands: number;
+  address?:Address[];
+}
+
+export interface Division {
+  id: number;
+  name: string;
+  districtId: string;
+  liveStatus: boolean;
+  farmers :number;
+  lands:number;
+  address?:Address[];
+}
+
+
+
+
+// Category types
+export interface Category {
+  id: string;
+  name: string;
+}
+
+// Notification types
+export interface Notification {
+  id: string;
+  userId: string;
+  message: string;
+  isRead: boolean;
+  createdAt: string;
+  link?: string;
+}
+
 
 // Cultivation types
 export interface Cultivation {
@@ -78,35 +147,50 @@ export interface Comment {
   createdAt: string;
 }
 
-// District and Division types
-export interface District {
+
+// User types
+export interface User {
   id: string;
   name: string;
-  divisions: Division[];
-  farmers: number;
-  lands: number;
+  role: UserRole;
+  nic: string;
+  profilePicture?: string;
 }
 
-export interface Division {
+export enum UserRole {
+  GUEST = "GUEST",
+  FARMER = "FARMER",
+  DIVISION_OFFICER = "DIVISION_OFFICER",
+  DISTRICT_OFFICER = "DISTRICT_OFFICER",
+  HEAD_OFFICER = "HEAD_OFFICER"
+}
+
+// Land types
+export interface Land {
   id: string;
+  address: Address;
+  irrigationType: string;
+  paddyLandType?: string;
+  farmerId?: string;
+  approved: boolean;
+  cultivations: Cultivation[];
+}
+
+interface CropTermDTO {
+  cropId: number;
   name: string;
-  districtId?: string;
-  officerId ?: string ;
-  //liveStatus?: number; // Added liveStatus
+  farmerCount: number;
+  landCount: number;
+  cultivateCount: number;
 }
 
-// Category types
-export interface Category {
-  id: string;
+interface AllSingleDivisionPageDTO {
+  divisionId: number;
   name: string;
-}
-
-// Notification types
-export interface Notification {
-  id: string;
-  userId: string;
-  message: string;
-  isRead: boolean;
-  createdAt: string;
-  link?: string;
+  farmersCount: number;
+  landsCount: number;
+  cultivateCount: number;
+  vegetablesFarming: CropTermDTO[];
+  riceFarming: CropTermDTO[];
+  longTermCrop: CropTermDTO[];
 }

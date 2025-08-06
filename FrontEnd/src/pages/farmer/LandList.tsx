@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
 import { getMockLandsByFarmerId } from "@/services/mockData";
 import { Search } from "lucide-react";
+import LandForm from "@/components/LandForm";
 
 const LandList: React.FC = () => {
   const { user } = useAuth();
@@ -14,6 +15,7 @@ const LandList: React.FC = () => {
   
   // Get lands for the logged-in farmer
   const lands = user ? getMockLandsByFarmerId(user.id) : [];
+  const [isLandPopupOpen, setIsLandPopupOpen] = useState(false);
   
   // Filter lands based on search term
   const filteredLands = lands.filter((land) => 
@@ -27,10 +29,23 @@ const LandList: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">My Lands</h1>
-          <Button asChild>
-            <Link to="/farmer/lands/add">Add New Land</Link>
+          <Button asChild onClick={() => setIsLandPopupOpen(true)} >
+            <Link to="/farmer/lands">Add New Land</Link>
           </Button>
         </div>
+        {isLandPopupOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"
+          onClick={() => setIsLandPopupOpen(false)}
+        >
+          <div 
+            className="max-w-5xl w-full max-h-[90vh] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <LandForm onClose={() => setIsLandPopupOpen(false)} />
+          </div>
+        </div>
+      )}
         
         {/* Search bar */}
         <div className="relative max-w-md mb-8">
@@ -108,8 +123,8 @@ const LandList: React.FC = () => {
               </p>
             )}
             
-            <Button asChild>
-              <Link to="/farmer/lands/add">Add New Land</Link>
+            <Button asChild onClick={() => setIsLandPopupOpen(true)} >
+              <Link to="/farmer/lands">Add New Land</Link>
             </Button>
           </div>
         )}

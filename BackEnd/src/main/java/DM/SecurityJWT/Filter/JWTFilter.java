@@ -1,7 +1,7 @@
 package DM.SecurityJWT.Filter;
 
 import DM.SecurityJWT.Entity.AuthUsers;
-import DM.SecurityJWT.Repository.UsersRepository;
+import DM.SecurityJWT.Repository.AuthRepository;
 import DM.SecurityJWT.Service.JWTServices;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,11 +21,11 @@ import java.io.IOException;
 public class JWTFilter extends OncePerRequestFilter { /* every request this filter executes*/
 
     private final JWTServices jwtServices;
-    private final UsersRepository farmerRepository;
+    private final AuthRepository authRepository;
 
-    public JWTFilter(JWTServices jwtServices, UsersRepository farmerRepository) {
+    public JWTFilter(JWTServices jwtServices,  AuthRepository authRepository) {
         this.jwtServices = jwtServices;
-        this.farmerRepository = farmerRepository;
+        this.authRepository = authRepository;
     }
 
 
@@ -56,7 +56,7 @@ public class JWTFilter extends OncePerRequestFilter { /* every request this filt
         }
 
         /* if come here is mean we have correct token and username. now we can check username our database have valid or not*/
-        AuthUsers loginUserData=farmerRepository.findByUsername(username).orElse(null);
+        AuthUsers loginUserData=authRepository.findByUsername(username).orElse(null);
 
         /* this mean token username not have database. */
         if(loginUserData == null) {

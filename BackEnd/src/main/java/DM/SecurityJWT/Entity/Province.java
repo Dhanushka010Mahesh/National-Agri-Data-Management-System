@@ -1,5 +1,7 @@
 package DM.SecurityJWT.Entity;
 
+import java.util.Arrays;
+
 public enum Province {
     Western_Province, // Includes Colombo, Gampaha, and Kalutara.
     Southern_Province, // Includes Galle, Matara, and Hambantota.
@@ -9,5 +11,11 @@ public enum Province {
     Uva_Province, // Includes Badulla and Monaragala.
     Northern_Province, // Includes Jaffna, Mannar, and Vanni
     North_Central_Province, // Includes Anuradhapura and Polonnaruwa.
-    Northwest_Province  // Includes Kurunegala and Puttalam.
+    Northwest_Province;  // Includes Kurunegala and Puttalam
+
+    public static String[] getProvinceNames() {
+        return Arrays.stream(Province.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+    }
 }

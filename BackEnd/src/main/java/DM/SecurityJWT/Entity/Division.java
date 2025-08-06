@@ -16,7 +16,7 @@ public class Division {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "division_id")
-    private Long id; // Changed to Long for AUTO_INCREMENT
+    private Long id;
 
     private String name;
 
@@ -24,24 +24,13 @@ public class Division {
     @JoinColumn(name = "district_id_fk")
     @JsonBackReference
     private District district;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
-    private boolean liveStatus; // Maps to BIT in MySQL
     @NonNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id_fk")
     private Address address;
-
-//    // Custom getter for JSON serialization to format ID as DIV_XXXX
-//    @JsonProperty("id")
-//    public String getFormattedId() {
-//        return String.format("DIV_%04d", id);
-//    }
-
-    // Custom getter for district_id_fk
-    @JsonProperty("districtId")
-    public String getDistrictId() {
-        return district != null ? String.format("DIS_%04d", district.getId()) : null;
-    }
 
     public void setDistrict(District district) {
         this.district = district;
@@ -49,4 +38,21 @@ public class Division {
             district.getDivisions().add(this);
         }
     }
+
+    //    private boolean liveStatus; // Maps to BIT in MySQL
+
+    //    private int lands;
+//    private int farmers;
+
+//    // Custom getter for JSON serialization to format ID as DIV_XXXX
+//    @JsonProperty("id")
+//    public String getFormattedId() {
+//        return String.format("DIV_%04d", id);
+//    }
+
+//    // Custom getter for district_id_fk
+//    @JsonProperty("districtId")
+//    public String getDistrictId() {
+//        return district != null ? String.format("DIS_%04d", district.getId()) : null;
+//    }
 }

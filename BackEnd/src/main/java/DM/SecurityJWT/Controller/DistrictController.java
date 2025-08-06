@@ -1,7 +1,9 @@
 package DM.SecurityJWT.Controller;
 
+import DM.SecurityJWT.Dto.*;
 import DM.SecurityJWT.Entity.District;
 import DM.SecurityJWT.Service.DistrictService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,33 +21,48 @@ public class DistrictController {
         this.districtService = districtService;
     }
 
-    @GetMapping("/getAllDistricts")
-    public List<District> getAllDistricts() {
+    @PostMapping("/new")
+    public ResponseEntity<RespondDTO> createDistrict(@RequestBody DistrictCreateDTO districtDTO){
+        RespondDTO district=districtService.createDistrict(
+                districtDTO.getName(),
+                districtDTO.getAddress()
+        );
+        return ResponseEntity.ok(district);
+    }
+
+    @GetMapping("/getAll")
+    public List<DistrictRespondDTO> getAllDistricts() {
         return districtService.getAllDistricts();
     }
 
-    @GetMapping("/getDisableDistrictCount")
-    public long getDistrictCountWithOfficer() {
-        return districtService.getDisableDistrictCount();
+    @GetMapping("/get")
+    public List<PageDistrictsRespondDTO> getAllDistrictsPageData() {
+        return districtService.getAllDistrictsPageData();
     }
 
-    @GetMapping("/getDisableDivisionCount")
-    public long getDivisionCountWithOfficer() {
-        return districtService.getDisableDivisionCount();
-    }
-
-    @GetMapping("/getAllLiveDistrictCount")
-    public long getDistrictCountWithoutOfficer() {
-        return districtService.getAllDistrictCount();
-    }
-
-    @GetMapping("/getAllLiveDivisionCount")
-    public long getDivisionCountWithoutOfficer() {
-        return districtService.getAllDivisionCount();
-    }
-
-    @GetMapping("/districtSelected/{id}")
-    public Optional<District> getDistrictsWithOfficerDivisions(@PathVariable("id") Long district_Id) {
-        return districtService.districtsSelected(district_Id);
-    }
+//
+//    @GetMapping("/getDisableDistrictCount")
+//    public long getDistrictCountWithOfficer() {
+//        return districtService.getDisableDistrictCount();
+//    }
+//
+//    @GetMapping("/getDisableDivisionCount")
+//    public long getDivisionCountWithOfficer() {
+//        return districtService.getDisableDivisionCount();
+//    }
+//
+//    @GetMapping("/getAllLiveDistrictCount")
+//    public long getDistrictCountWithoutOfficer() {
+//        return districtService.getAllDistrictCount();
+//    }
+//
+//    @GetMapping("/getAllLiveDivisionCount")
+//    public long getDivisionCountWithoutOfficer() {
+//        return districtService.getAllDivisionCount();
+//    }
+//
+//    @GetMapping("/districtSelected/{id}")
+//    public Optional<District> getDistrictsWithOfficerDivisions(@PathVariable("id") Long district_Id) {
+//        return districtService.districtsSelected(district_Id);
+//    }
 }

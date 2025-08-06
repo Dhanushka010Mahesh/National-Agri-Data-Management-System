@@ -1,16 +1,12 @@
 package DM.SecurityJWT.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Entity
 @Data
+@RequiredArgsConstructor
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +18,19 @@ public class Address {
 
     private String city;
 
+    @Enumerated(EnumType.STRING)
     private Province state;
 
     private String postalCode;
+
+
+    public Address(String number, String street, String city) {
+        this.number=number;
+        this.city=city;
+        this.street=street;
+    }
+
+    public Address(String s) {
+
+    }
 }

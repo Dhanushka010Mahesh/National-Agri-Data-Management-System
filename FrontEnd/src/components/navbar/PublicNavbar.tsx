@@ -1,163 +1,230 @@
-
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { UserRole } from "@/types";
-import { Bell, Menu, X } from "lucide-react";
-import UserMenu from "./FarmerMenu";
-import NotificationPanel from "./NotificationPanel";
+import { ChevronDown, Leaf, LogOut, MapPin, Menu, User, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { UserRole, useAuth } from "@/contexts/AuthContext";
+import ProfileIMGFarmer from "@/assets/tree-planting.png";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 const Navbar: React.FC = () => {
-  const { user, isAuthenticated, logout } = useAuth();
-  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
+  const { isAuthenticated, logout, user } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const toggleNotifications = () => {
-    setShowNotifications(!showNotifications);
-  };
-
-  const handleLogin = () => {
-    navigate("/login");
-  };
-
-  const handleRegister = () => {
-    navigate("/register");
-  };
-
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
-
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-black/95 backdrop-blur-sm border-b border-green-500/20 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            <div className="flex-shrink-0 flex items-center">
-              <Link to="/" className="flex items-center">
-                <img
-                  className="h-10 w-10 mr-2"
-                  src="https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=50&h=50&fit=crop"
-                  alt="Agri-Connect Logo"
-                />
-                <span className="text-xl font-bold text-primary">AgriConnect</span>
-              </Link>
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2 group">
+            <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <Leaf className="w-5 h-5 text-white" />
             </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-4">
-              <Link to="/" className="nav-link">Home</Link>
-              <Link to="/blogs" className="nav-link">Blogs</Link>
-              <Link to="/about" className="nav-link">About</Link>
-              <Link to="/contact" className="nav-link">Contact</Link>
-            </div>
+            <span className="text-xl font-bold text-white">AgriConnect</span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            <Link
+              to="/"
+              className="text-white/80 hover:text-green-400 transition-colors duration-300 font-medium"
+            >
+              Home
+            </Link>
+            <Link
+              to="/blogs"
+              className="text-white/80 hover:text-green-400 transition-colors duration-300 font-medium"
+            >
+              Blogs
+            </Link>
+            {/* <Link 
+              to="/resources" 
+              className="text-white/80 hover:text-green-400 transition-colors duration-300 font-medium"
+            >
+              Resources
+            </Link> */}
+            <Link
+              to="/about"
+              className="text-white/80 hover:text-green-400 transition-colors duration-300 font-medium"
+            >
+              About
+            </Link>
+            <Link
+              to="/contact"
+              className="text-white/80 hover:text-green-400 transition-colors duration-300 font-medium"
+            >
+              Contact
+            </Link>
           </div>
-          <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
-            {isAuthenticated ? (
-              <>
-                {(user?.role === UserRole.FARMER) && (
-                  <Button variant="ghost" onClick={toggleNotifications} className="relative">
-                    <Bell className="h-5 w-5" />
-                    <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500" />
-                  </Button>
-                )}
-                <UserMenu user={user} onLogout={handleLogout} />
-              </>
+
+          {/* Desktop Auth Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
+            {(user?.role === 'FARMER') ? (
+              
+              <div className="flex items-center space-x-4">
+                <span className="text-white">Welcome back!</span>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center space-x-2 text-white hover:text-green-400 transition-colors cursor-pointer focus:outline-none">
+                    <Avatar className="w-8 h-8 border-2 border-green-500">
+                      <AvatarImage src={ProfileIMGFarmer} alt={user.name} />
+                      <AvatarFallback className="bg-green-500 text-white text-sm">
+                        {user.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")
+                          .toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm font-medium">{user.name}</span>
+                    <ChevronDown className="w-4 h-4" />
+                  </DropdownMenuTrigger>
+
+                  <DropdownMenuContent
+                    className="w-48 bg-white border border-gray-200 shadow-lg rounded-md z-50"
+                    align="end"
+                  >
+                    <DropdownMenuItem className="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      <User className="w-4 h-4" />
+                      <span>
+                        <Link to="/farmer/profile">Profile</Link>
+                      </span>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem className="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      <MapPin className="w-4 h-4" />
+                      <span>
+                        <Link to="/farmer/lands">My Lands</Link>
+                      </span>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem
+                      className="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600"
+                      onClick={logout}
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Logout</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             ) : (
               <>
-                <Button variant="outline" onClick={handleLogin}>Login</Button>
-                <Button onClick={handleRegister}>Register</Button>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="text-white hover:text-green-400 hover:bg-green-500/10"
+                >
+                  <Link to="/login">Sign In</Link>
+                </Button>
+                <Button
+                  asChild
+                  className="bg-green-500 hover:bg-green-600 text-white"
+                >
+                  <Link to="/register" >Get Started</Link>
+                </Button>
               </>
             )}
           </div>
-          <div className="flex items-center sm:hidden">
-            <button
-              onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-primary hover:text-primary-dark hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={toggleMenu}
+            className="md:hidden text-white hover:text-green-400 transition-colors duration-300"
+          >
+            {isMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        <div
+          className={cn(
+            "md:hidden transition-all duration-300 ease-in-out overflow-hidden",
+            isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          )}
+        >
+          <div className="py-4 space-y-4 border-t border-green-500/20">
+            <Link
+              to="/"
+              className="block text-white/80 hover:text-green-400 transition-colors duration-300 font-medium"
+              onClick={() => setIsMenuOpen(false)}
             >
-              <span className="sr-only">Open main menu</span>
-              {isMenuOpen ? (
-                <X className="block h-6 w-6" aria-hidden="true" />
-              ) : (
-                <Menu className="block h-6 w-6" aria-hidden="true" />
-              )}
-            </button>
+              Home
+            </Link>
+            <Link
+              to="/farmers"
+              className="block text-white/80 hover:text-green-400 transition-colors duration-300 font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Farmers
+            </Link>
+            {/* <Link 
+              to="/resources" 
+              className="block text-white/80 hover:text-green-400 transition-colors duration-300 font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Resources
+            </Link> */}
+            <Link
+              to="/about"
+              className="block text-white/80 hover:text-green-400 transition-colors duration-300 font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              to="/contact"
+              className="block text-white/80 hover:text-green-400 transition-colors duration-300 font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contact
+            </Link>
+
+            {/* Mobile Auth Buttons */}
+            {!isAuthenticated ? (
+              <div className="pt-4 space-y-3 border-t border-green-500/20">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full border-green-500 text-green-500 hover:bg-green-500 hover:text-white"
+                >
+                  <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                    Sign In
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  className="w-full bg-green-500 hover:bg-green-600 text-white"
+                >
+                  <Link to="/register" onClick={() => setIsMenuOpen(false)}>
+                    Get Started
+                  </Link>
+                </Button>
+              </div>
+            ) : (
+              <div className="pt-4 border-t border-green-500/20">
+                <Button className="w-full bg-green-500 hover:bg-green-600 text-white">
+                  Dashboard
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
-
-      {/* Mobile menu */}
-      <div className={cn("sm:hidden", isMenuOpen ? "block" : "hidden")}>
-        <div className="pt-2 pb-3 space-y-1">
-          <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary-light hover:text-primary-dark">
-            Home
-          </Link>
-          <Link to="/blogs" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary-light hover:text-primary-dark">
-            Blogs
-          </Link>
-          <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary-light hover:text-primary-dark">
-            About
-          </Link>
-          <Link to="/contact" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-primary-light hover:text-primary-dark">
-            Contact
-          </Link>
-        </div>
-        <div className="pt-4 pb-3 border-t border-gray-200">
-          {isAuthenticated ? (
-            <>
-              <div className="flex items-center px-4">
-                <div className="flex-shrink-0">
-                  <img
-                    className="h-10 w-10 rounded-full"
-                    src={user?.profilePicture || "https://images.unsplash.com/photo-1582562124811-c09040d0a901"}
-                    alt={user?.name}
-                  />
-                </div>
-                <div className="ml-3">
-                  <div className="text-base font-medium">{user?.name}</div>
-                  <div className="text-sm font-medium text-gray-500">{user?.nic}</div>
-                </div>
-                {(user?.role === UserRole.FARMER) && (
-                  <Button variant="ghost" onClick={toggleNotifications} className="ml-auto relative">
-                    <Bell className="h-5 w-5" />
-                    <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500" />
-                  </Button>
-                )}
-              </div>
-              <div className="mt-3 space-y-1">
-                <Link to="/farmer/profile" className="block px-4 py-2 text-base font-medium hover:bg-primary-light hover:text-primary-dark">
-                  Profile
-                </Link>
-                {user?.role === UserRole.FARMER && (
-                  <Link to="/farmer/lands" className="block px-4 py-2 text-base font-medium hover:bg-primary-light hover:text-primary-dark">
-                    Land Details
-                  </Link>
-                )}
-                <button
-                  onClick={handleLogout}
-                  className="block w-full text-left px-4 py-2 text-base font-medium hover:bg-primary-light hover:text-primary-dark"
-                >
-                  Logout
-                </button>
-              </div>
-            </>
-          ) : (
-            <div className="mt-3 space-y-1 px-2">
-              <Button onClick={handleLogin} className="w-full mb-2">Login</Button>
-              <Button onClick={handleRegister} variant="outline" className="w-full">Register</Button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Notification panel */}
-      {showNotifications && <NotificationPanel onClose={toggleNotifications} />}
     </nav>
   );
 };

@@ -3,5 +3,7 @@ package DM.SecurityJWT.Entity;
 public enum  Role {
     FARMER,
     DIVISION_OFFICER,
-    DISTRICT_OFFICER
+    DISTRICT_OFFICER,
+    AGRICULTURE_OFFICER;
+
 }

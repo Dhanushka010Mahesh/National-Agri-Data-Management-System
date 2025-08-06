@@ -1,7 +1,7 @@
 package DM.SecurityJWT.Config;
 
 import DM.SecurityJWT.Filter.JWTFilter;
-import DM.SecurityJWT.Repository.UsersRepository;
+import DM.SecurityJWT.Repository.AuthRepository;
 import DM.SecurityJWT.Service.UsersDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,11 +20,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final UsersRepository farmerRepository;
+    private final AuthRepository authRepository;
     private final JWTFilter jwtFilter;
 
-    public SecurityConfig(UsersRepository farmerRepository, JWTFilter jwtFilter) {
-        this.farmerRepository = farmerRepository;
+    public SecurityConfig(AuthRepository authRepository, JWTFilter jwtFilter) {
+        this.authRepository = authRepository;
         this.jwtFilter = jwtFilter;
     }
 
@@ -41,7 +41,7 @@ public class SecurityConfig {
 
                 /* some authentication disable-permit( give path in patterns) and anather all do like usualy  */
                 .authorizeHttpRequests(r->r
-                        .requestMatchers("/api/v1/users/signin","/api/v1/district/**","/api/v1/users/signup").permitAll()
+                        .requestMatchers("/api/v1/users/**","/api/v1/lands/**","/api/v1/crops/**","/api/v1/district/**","/api/v1/blogs/get/**","/api/v1/divisions/**","/api/v1/cultivation/**").permitAll()
                         .anyRequest().authenticated()
                 )
 
@@ -76,7 +76,7 @@ public class SecurityConfig {
 
     @Bean
     public UsersDetailsService usersDetailsService(){
-        return new UsersDetailsService(farmerRepository);
+        return new UsersDetailsService(authRepository);
     }
 
     @Bean

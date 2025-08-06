@@ -8,97 +8,6 @@ export const categories: Category[] = [
   { id: "3", name: "Long-Term Crops" }
 ];
 
-// Mock blogs
-export const blogs: Blog[] = [
-  {
-    id: "199",
-    title: "Modern Rice Farming Techniques",
-    content: `
-      <p>Ricee farming has evolved significantly over the past decade. Modern techniques now include precision agriculture, drone monitoring, and sustainable water management.</p>
-      <h2>Precision Agriculture</h2>
-      <p>Using GPS-guided equipment, farmers can now plant, fertilize, and harvest with centimeter-level accuracy. This reduces waste and increases yield.</p>
-      <h2>Drone Monitoring</h2>
-      <p>Drones equipped with multispectral cameras can detect plant health issues before they're visible to the human eye.</p>
-      <h2>Sustainable Water Management</h2>
-      <p>Alternate wetting and drying technique can save up to 30% of water compared to continuous flooding, while maintaining or even increasing yields.</p>
-    `,
-    imageUrl: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21",
-    author: {
-      id: "1",
-      name: "Sachin Perera",
-      profilePicture: "https://images.unsplash.com/photo-1582562124811-c09040d0a901"
-    },
-    createdAt: "2023-04-15T09:00:00Z",
-    likeCount: 45,
-    viewCount: 230,
-    comments: [
-      {
-        id: "101",
-        content: "Great article! I'm implementing these techniques in my farm.",
-        userId: "2",
-        userName: "Kumara Silva",
-        userProfilePicture: "https://images.unsplash.com/photo-1582562124811-c09040d0a901",
-        createdAt: "2023-04-16T14:30:00Z"
-      }
-    ]
-  },
-  {
-    id: "2",
-    title: "Organic Vegetable Growing Guide for Sri Lankan Climate",
-    content: `
-      <p>Growing organic vegetables in Sri Lanka's tropical climate presents unique challenges and opportunities.</p>
-      <h2>Seasonal Planning</h2>
-      <p>Understanding the monsoon patterns is crucial for successful vegetable cultivation in Sri Lanka.</p>
-      <h2>Pest Management</h2>
-      <p>Natural pest control methods like neem oil extract and companion planting work exceptionally well in our climate.</p>
-      <h2>Local Varieties</h2>
-      <p>Indigenous vegetable varieties often have better resistance to local pests and diseases.</p>
-    `,
-    imageUrl: "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843",
-    author: {
-      id: "2",
-      name: "Amali Fernando",
-      profilePicture: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
-    },
-    createdAt: "2023-04-12T11:00:00Z",
-    likeCount: 38,
-    viewCount: 186,
-    comments: []
-  },
-  {
-    id: "3",
-    title: "Sustainable Coconut Cultivation Practices",
-    content: `
-      <p>Coconut is one of Sri Lanka's most important crops. Here's how to cultivate it sustainably.</p>
-      <h2>Planting Distance</h2>
-      <p>Proper spacing between coconut trees ensures optimal growth and yield.</p>
-      <h2>Intercropping</h2>
-      <p>Growing other crops between coconut trees maximizes land use and provides additional income.</p>
-      <h2>Organic Fertilization</h2>
-      <p>Using coconut husks as mulch returns nutrients to the soil and improves moisture retention.</p>
-    `,
-    imageUrl: "https://images.unsplash.com/photo-1615729947596-a598e5de0ab3",
-    author: {
-      id: "3",
-      name: "Nimal Jayasinghe",
-      profilePicture: "https://images.unsplash.com/photo-1517022812141-23620dba5c23"
-    },
-    createdAt: "2023-04-10T10:00:00Z",
-    likeCount: 29,
-    viewCount: 145,
-    comments: [
-      {
-        id: "102",
-        content: "I've been using these methods for years. They really work!",
-        userId: "4",
-        userName: "Lakshmi Perera",
-        userProfilePicture: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
-        createdAt: "2023-04-11T08:15:00Z"
-      }
-    ]
-  }
-];
-
 // Mock lands
 export const lands: Land[] = [
   {
@@ -196,9 +105,6 @@ export const notifications: Notification[] = [
   }
 ];
 
-// Get mock data functions
-export const getMockBlogs = () => blogs;
-export const getMockBlogById = (id: string) => blogs.find(blog => blog.id === id);
 export const getMockLands = () => lands;
 export const getMockLandsByFarmerId = (farmerId: string) => lands.filter(land => land.farmerId === farmerId);
 export const getMockLandById = (id: string) => lands.find(land => land.id === id);

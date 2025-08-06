@@ -14,8 +14,8 @@ const Profile: React.FC = () => {
   
   const [formData, setFormData] = useState({
     name: user?.name || "",
-    nic: user?.nic || "",
-    mobile: "0771234567", // Mock data
+    nic: user?.nic || "200236100669",
+    mobile:  "0771234567", // Mock data
     address: "123 Farm Road, Colombo", // Mock data
     bankAccount: "1234567890", // Mock data
   });
@@ -186,12 +186,12 @@ const Profile: React.FC = () => {
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold mb-4">Two-Factor Authentication</h3>
+                {/* <h3 className="text-lg font-semibold mb-4">Two-Factor Authentication</h3>
                 <p className="text-gray-600 mb-6">
                   Two-factor authentication adds an extra layer of security to your account. When enabled, you'll need to provide a code from your phone in addition to your password when logging in.
                 </p>
                 
-                <Button variant="outline">Enable Two-Factor Authentication</Button>
+                <Button variant="outline">Enable Two-Factor Authentication</Button> */}
               </div>
             </div>
           </CardContent>
